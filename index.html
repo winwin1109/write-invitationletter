@@ -2,7 +2,7 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>實用文寫作特訓：邀請信大師之路 | winwin1109 Dojo</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -13,13 +13,17 @@
             --l2-bg: #f1f5f9; --l2-panel: #ffffff; --l2-primary: #3b82f6; --l2-accent: #10b981;
         }
 
-        body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Noto Sans TC', sans-serif; font-weight: 700; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; user-select: none; }
+        /* 修正手機版滑動與視口高度問題 */
+        body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Noto Sans TC', sans-serif; font-weight: 700; display: flex; justify-content: center; align-items: center; min-height: 100dvh; overflow-x: hidden; overflow-y: auto; user-select: none; -webkit-tap-highlight-color: transparent; }
         
-        #level1-view { width: 100%; display: flex; justify-content: center; align-items: center; }
-        #level2-view { width: 100%; display: none; justify-content: center; align-items: center; background-color: var(--l2-bg); color: #333; height: 100vh; flex-direction: column; padding: 20px; box-sizing: border-box; }
+        /* 允許輸入框可以選取與操作 */
+        input { user-select: auto; }
+
+        #level1-view { width: 100%; min-height: 100dvh; display: flex; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;}
+        #level2-view { width: 100%; display: none; justify-content: center; align-items: center; background-color: var(--l2-bg); color: #333; height: 100dvh; flex-direction: column; padding: 15px; box-sizing: border-box; }
 
         /* ================= LEVEL 1: 職場格鬥 ================= */
-        #arcade-cabinet { width: 100%; max-width: 1000px; height: 100vh; max-height: 720px; background: linear-gradient(to bottom, #4c1d95, #000 70%, #2e1065); border: 6px solid #6d28d9; border-radius: 12px; position: relative; display: flex; flex-direction: column; box-shadow: 0 0 80px rgba(109, 40, 217, 0.6); overflow: hidden; }
+        #arcade-cabinet { width: 100%; max-width: 1000px; height: 100%; max-height: 800px; background: linear-gradient(to bottom, #4c1d95, #000 70%, #2e1065); border: 6px solid #6d28d9; border-radius: 12px; position: relative; display: flex; flex-direction: column; box-shadow: 0 0 80px rgba(109, 40, 217, 0.6); overflow: hidden; }
         #hud { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: rgba(0,0,0,0.6); border-bottom: 3px solid #333; z-index: 10; } 
         .health-container { width: 38%; } 
         .arcade-font { font-family: 'Press Start 2P', monospace; text-shadow: 2px 2px 0 #000; } 
@@ -35,6 +39,9 @@
 
         #stage { flex: 1; position: relative; background: radial-gradient(circle at center, #2e1065 0%, #000 100%); border-bottom: 8px solid #4338ca; overflow: hidden; display: flex; justify-content: space-around; align-items: flex-end; padding-bottom: 40px; } 
         
+        /* 角色外層包裹區塊 (恢復彈性排版，解決電腦版消失問題) */
+        .f-wrap { display: flex; justify-content: center; align-items: flex-end; transition: transform 0.3s ease; transform-origin: bottom center; }
+
         /* 角色繪製 */
         #fighter-p1 { position: relative; width: 120px; height: 220px; transition: transform 0.2s, filter 0.2s; transform: scaleX(-1); } 
         .p1-head { width: 48px; height: 48px; background: var(--p1-skin); border-radius: 8px; position: absolute; top: 72px; left: 36px; box-shadow: 0 4px 0 rgba(0,0,0,0.2); z-index: 2; } 
@@ -63,7 +70,6 @@
         .hit-effect { position: absolute; font-family: 'Press Start 2P', monospace; font-size: 1.8em; color: var(--text-gold); text-shadow: 3px 3px 0 #dc2626; opacity: 0; pointer-events: none; z-index: 20; } 
         #wrong-fx { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.2); z-index: 15; display: none; animation: flash 0.2s 2; } 
         
-        /* 動態分數特效 (修正未顯示與排版問題) */
         .score-anim { position: absolute; left: 50%; transform: translateX(-50%); font-family: 'Press Start 2P', monospace; font-size: 1.3em; top: -10px; text-shadow: 2px 2px 0 #000; animation: scoreFloatUp 1s ease-out forwards; pointer-events: none; z-index: 20; }
         @keyframes scoreFloatUp { 0% { opacity: 1; top: -10px; } 100% { opacity: 0; top: -45px; } }
 
@@ -82,21 +88,22 @@
         @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } } .screen-shake { animation: shake 0.4s; }
 
         /* UI */
-        #control-panel { height: 290px; background-color: var(--ui-bg); border-top: 5px solid #6d28d9; padding: 20px; display: flex; flex-direction: column; gap: 15px; position: relative; } 
+        #control-panel { flex-shrink: 0; background-color: var(--ui-bg); border-top: 5px solid #6d28d9; padding: 20px; display: flex; flex-direction: column; gap: 15px; position: relative; } 
         #question-box { font-size: 1.25em; font-weight: 700; background: #0f172a; border: 3px solid #3b82f6; padding: 15px 20px; border-radius: 10px; line-height: 1.5; min-height: 70px; box-shadow: inset 0 0 15px rgba(59, 130, 246, 0.3); font-family: 'Noto Sans TC', sans-serif; } 
-        #options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; } 
-        .option-btn { background: linear-gradient(to bottom, #1e293b, #0f172a); border: 3px solid #475569; color: #f8fafc; font-size: 1.15em; font-weight: 700; font-family: inherit; border-radius: 8px; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; padding: 0 20px; position: relative; overflow: hidden; } 
+        #options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } 
+        .option-btn { background: linear-gradient(to bottom, #1e293b, #0f172a); border: 3px solid #475569; color: #f8fafc; font-size: 1.15em; font-weight: 700; font-family: inherit; border-radius: 8px; cursor: pointer; transition: all 0.1s; display: flex; align-items: center; padding: 15px 20px; position: relative; overflow: hidden; } 
         .option-btn::before { content: attr(data-key); font-family: 'Press Start 2P', monospace; color: var(--text-gold); font-size: 0.75em; margin-right: 18px; opacity: 0.8; } 
         .option-btn:hover:not(:disabled) { background: linear-gradient(to bottom, #334155, #1e293b); border-color: var(--text-gold); transform: scale(1.02); box-shadow: 0 0 10px rgba(251, 191, 36, 0.3); } 
         .option-btn:disabled { opacity: 0.5; cursor: not-allowed; } .option-btn.correct-blink { background: #166534 !important; border-color: #4ade80 !important; animation: flash 0.15s 3; } .option-btn.wrong-blink { background: #991b1b !important; border-color: #f87171 !important; animation: flash 0.15s 3; }
         
-        #feedback-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); z-index: 30; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px 40px; box-sizing: border-box; border-top: 5px solid #dc2626; } 
-        #feedback-header { font-family: 'Press Start 2P', monospace; font-size: 1.3em; color: #ef4444; margin-bottom: 15px; text-shadow: 2px 2px 0 #450a0a; } 
-        #feedback-content { width: 100%; max-width: 800px; background: rgba(30, 41, 59, 0.8); border: 2px solid #475569; border-radius: 10px; padding: 20px; margin-bottom: 25px; font-size: 1.1em; line-height: 1.6; font-family: 'Noto Sans TC', sans-serif; font-weight: 400; } 
+        /* 修正回饋面板高度與滾動 */
+        #feedback-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); z-index: 30; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 15px 20px; box-sizing: border-box; border-top: 5px solid #dc2626; } 
+        #feedback-header { font-family: 'Press Start 2P', monospace; font-size: 1.3em; color: #ef4444; margin-bottom: 15px; text-shadow: 2px 2px 0 #450a0a; flex-shrink: 0; } 
+        #feedback-content { width: 100%; max-width: 800px; background: rgba(30, 41, 59, 0.8); border: 2px solid #475569; border-radius: 10px; padding: 15px 20px; margin-bottom: 15px; font-size: 1.1em; line-height: 1.6; font-family: 'Noto Sans TC', sans-serif; font-weight: 400; flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; } 
         .fb-wrong-section { color: #fca5a5; margin-bottom: 15px; text-align: left; } .fb-correct-section { color: #a7f3d0; border-top: 2px dashed #475569; padding-top: 15px; text-align: left; } .fb-title { font-weight: 900; display: inline-block; margin-bottom: 5px; } 
-        .continue-btn { background: #fff; border: 4px solid #333; color: #000; font-family: 'Press Start 2P', monospace; padding: 12px 25px; font-size: 1em; cursor: pointer; border-radius: 5px; transition: background 0.2s; } .continue-btn:hover { background: #eee; }
+        .continue-btn { background: #fff; border: 4px solid #333; color: #000; font-family: 'Press Start 2P', monospace; padding: 12px 25px; font-size: 1em; cursor: pointer; border-radius: 5px; transition: background 0.2s; flex-shrink: 0; } .continue-btn:hover { background: #eee; }
         
-        #game-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px; } 
+        #game-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; } 
         .overlay-title { font-family: 'Press Start 2P', monospace; font-size: 2.2em; color: var(--text-gold); text-shadow: 5px 5px 0 #b45309; margin-bottom: 25px; line-height: 1.4; } .overlay-desc { font-size: 1.25em; max-width: 85%; margin-bottom: 35px; color: #93c5fd; line-height: 1.7; }
         .start-btn { background: #dc2626; border: 5px solid #fff; color: white; font-family: 'Press Start 2P', monospace; padding: 18px 35px; font-size: 1.3em; cursor: pointer; animation: start-pulse 0.8s infinite alternate; border-radius: 10px; box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4); } 
         .next-lvl-btn { background: #10b981; border-color: #fff; display: none; } .next-lvl-btn:hover { background: #059669; } 
@@ -104,7 +111,7 @@
 
         /* ================= LEVEL 2 (資料整理與結構重組) ================= */
         .l2-container { width: 100%; max-width: 1300px; height: 100%; display: flex; flex-direction: column; background: #fff; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); overflow: hidden; border: 1px solid #e2e8f0; position: relative; }
-        .l2-header { background: #1e293b; color: #fff; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; } 
+        .l2-header { flex-shrink: 0; background: #1e293b; color: #fff; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; } 
         .l2-header-title { font-size: 1.4em; font-weight: 900; display: flex; align-items: center; gap: 10px; } 
         .l2-step-indicator { display: flex; gap: 10px; } 
         .step-dot { width: 30px; height: 30px; border-radius: 50%; background: #475569; display: flex; justify-content: center; align-items: center; font-weight: bold; transition: 0.3s; font-size:0.9em; cursor: not-allowed; opacity: 0.5;} 
@@ -116,7 +123,7 @@
 
         .l2-workspace { flex: 1; display: flex; overflow: hidden; background: #f8fafc; transition: 0.5s; }
         
-        .l2-left-panel { flex: 5; padding: 25px; overflow-y: auto; background: #fff; border-right: 2px solid #e2e8f0; position: relative; transition: 0.5s; }
+        .l2-left-panel { flex: 4; padding: 25px; overflow-y: auto; background: #fff; border-right: 2px solid #e2e8f0; position: relative; transition: 0.5s; -webkit-overflow-scrolling: touch; }
         .doc-paper { background: #fff; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #cbd5e1; position: relative; margin-bottom: 20px; font-family: 'PMingLiU', 'MingLiU', serif; line-height: 1.8; color: #333; } .doc-paper::before { content: ''; position: absolute; top: 0; left: 20px; bottom: 0; width: 2px; border-left: 2px solid #fca5a5; } .doc-title { font-size: 1.3em; font-weight: bold; color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; margin-bottom: 15px; margin-left: 15px; } .doc-content { margin-left: 15px; font-size: 1.1em; } .doc-content ul { padding-left: 20px; margin: 5px 0; }
         
         /* 隱藏式點擊文本/卡片 */
@@ -128,8 +135,8 @@
         .clickable-card:hover { background: rgba(253, 224, 71, 0.4); border-color: #ca8a04; box-shadow: 0 0 10px rgba(202, 138, 4, 0.3); }
         .clickable-card.used { background: #d1fae5; border-color: #10b981; pointer-events: none; }
 
-        .l2-right-panel { flex: 5; display: flex; flex-direction: column; background: #fdf8f5; transition: 0.5s; }
-        .task-area { flex: 1; padding: 25px; overflow-y: auto; font-size: 1.1em; line-height: 1.8; color: #475569; }
+        .l2-right-panel { flex: 6; display: flex; flex-direction: column; background: #fdf8f5; transition: 0.5s; -webkit-overflow-scrolling: touch; overflow-y: auto; }
+        .task-area { flex: 1; padding: 25px; font-size: 1.1em; line-height: 1.8; color: #475569; }
         .task-title { font-size: 1.2em; color: #b45309; font-weight: 900; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; } .task-title::before { content: '📋'; }
         .task-box { background: #fff; border: 2px dashed #d4af37; border-radius: 10px; padding: 15px 20px; margin-bottom: 15px; }
 
@@ -141,9 +148,9 @@
         .inline-blank { min-width: 60px; height: 25px; padding: 0 8px; font-size: 0.95em; }
 
         /* L2 底部資料收集庫 */
-        .data-bank-bar { background: #1e293b; color: #fff; padding: 10px 20px; display: flex; align-items: center; gap: 15px; border-top: 3px solid #cbd5e1; z-index: 20; }
+        .data-bank-bar { flex-shrink: 0; background: #1e293b; color: #fff; padding: 10px 20px; display: flex; align-items: center; gap: 15px; border-top: 3px solid #cbd5e1; z-index: 20; }
         .data-bank-title { font-weight: bold; color: #fbbf24; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-        .data-pills-container { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px; scrollbar-width: thin; }
+        .data-pills-container { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
         .data-pill { background: #3b82f6; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.2); animation: popIn 0.4s; }
         @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
@@ -162,9 +169,9 @@
         .inline-mcq-group .mcq-btn { padding: 6px 12px; font-size: 0.9em; flex: 1; text-align: center; }
 
         /* Word Bank (Step 3) */
-        .word-bank-area { background: #fff; border-top: 2px solid #e2e8f0; padding: 15px; box-shadow: 0 -5px 15px rgba(0,0,0,0.03); }
+        .word-bank-area { background: #fff; border-top: 2px solid #e2e8f0; padding: 15px; box-shadow: 0 -5px 15px rgba(0,0,0,0.03); flex-shrink: 0; }
         .words-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-        .l2-word { padding: 6px 12px; background: #f8fafc; border: 2px solid #94a3b8; border-radius: 20px; color: #334155; font-weight: bold; cursor: pointer; transition: 0.2s; user-select: none; font-size:0.9em; }
+        .l2-word { padding: 6px 12px; background: #f8fafc; border: 2px solid #94a3b8; border-radius: 20px; color: #334155; font-weight: bold; cursor: pointer; transition: 0.2s; font-size:0.9em; }
         .l2-word:hover { background: var(--l2-primary); color: #fff; border-color: var(--l2-primary); transform: translateY(-2px); }
         .l2-word.used { opacity: 0; pointer-events: none; transform: scale(0.5); }
 
@@ -177,16 +184,16 @@
 
         /* ================= LEVEL 2 Step 5: 結構重組與自我增值 ================= */
         .mapping-container { display: flex; gap: 20px; height: 100%; position: relative; transition: 0.5s;}
-        .mapping-left { flex: 4; background: #fdf8f5; border-radius: 10px; padding: 20px; border: 2px dashed #cbd5e1; display:flex; flex-direction:column; gap:10px; overflow-y:auto; transition: 0.5s;}
+        .mapping-left { flex: 4; background: #fdf8f5; border-radius: 10px; padding: 20px; border: 2px dashed #cbd5e1; display:flex; flex-direction:column; gap:10px; overflow-y:auto; transition: 0.5s; -webkit-overflow-scrolling: touch;}
         .mapping-pill { background: #3b82f6; color: white; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: 0.2s; }
         .mapping-pill:hover { transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
         .mapping-pill.selected { background: #f59e0b; transform: scale(1.05); }
         .mapping-pill.used { opacity: 0; pointer-events: none; display:none; } 
         
-        .mapping-right { flex: 6; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding-right: 10px; transition: 0.5s;}
+        .mapping-right { flex: 6; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding-right: 10px; transition: 0.5s; -webkit-overflow-scrolling: touch;}
         
         /* 架構放大特效 (無遮擋設計) */
-        .mapping-right.expanded-view { flex: 10; padding: 0 40px; }
+        .mapping-right.expanded-view { flex: 10; padding: 0 20px; }
         .mapping-right.expanded-view .structure-slot { padding: 20px; border-width: 3px; margin-bottom: 5px; }
         .mapping-right.expanded-view .slot-title { font-size: 1.1em; padding-bottom: 10px;}
 
@@ -210,10 +217,10 @@
         /* 自我增值 Modal */
         #improve-modal { position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
         .modal-box { background: #fff; width: 90%; max-width: 800px; max-height: 90vh; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 15px 50px rgba(0,0,0,0.3); border: 3px solid #f59e0b; }
-        .modal-header { background: #fdf8f5; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; }
+        .modal-header { background: #fdf8f5; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; flex-shrink: 0; }
         .modal-title { color: #b45309; font-size: 1.3em; font-weight: 900; margin: 0; }
         .modal-close { background: #ef4444; color: #fff; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer; }
-        .modal-content { padding: 20px; overflow-y: auto; flex: 1; background: #f8fafc; }
+        .modal-content { padding: 20px; overflow-y: auto; flex: 1; background: #f8fafc; -webkit-overflow-scrolling: touch; }
         
         .improve-item { background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
         .improve-item:hover { border-color: #3b82f6; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
@@ -223,11 +230,36 @@
         .improve-item.open .improve-example { display: block; animation: fadeIn 0.3s; }
         .improve-item.open .improve-phrase::after { content: '▲'; }
 
+        /* ================= 手機版優化 ================= */
         @media (max-width: 950px) {
-            #arcade-cabinet { max-height: none; height: auto; } #level1-view { display: block; }
-            .main-layout { flex-direction: column-reverse; } #stage { height: 350px; flex: none; } #hud { flex-wrap: wrap; } .health-container { width: 100%; margin-bottom: 10px; }
-            .l2-workspace { flex-direction: column; } .l2-left-panel { flex: none; height: 40vh; border-right: none; border-bottom: 2px solid #e2e8f0; } .l2-right-panel { flex: 1; }
+            #arcade-cabinet { max-height: none; height: auto; min-height: 100dvh; border-radius: 0; border: none; } 
+            #level1-view { padding: 0; }
+            #stage { height: 260px; flex: none; padding-bottom: 20px; } 
+            
+            /* 將公仔等比例縮小 */
+            .f-wrap { transform: scale(0.65); margin: 0 -20px; }
+            
+            #hud { flex-wrap: wrap; } 
+            .health-container { width: 100%; margin-bottom: 10px; }
+            #control-panel { height: auto; flex: 1; padding: 15px; }
+            #options-grid { grid-template-columns: 1fr; }
+            .option-btn { padding: 12px 15px; font-size: 1em; }
+            
+            #level2-view { padding: 0; }
+            .l2-container { border-radius: 0; border: none; }
+            .l2-header { flex-wrap: wrap; padding: 10px 15px; }
+            .l2-header-title { font-size: 1.1em; margin-top: 10px; width: 100%; justify-content: center; }
+            
+            .l2-workspace { flex-direction: column; } 
+            .l2-left-panel { flex: none; height: 35vh; border-right: none; border-bottom: 3px solid #cbd5e1; } 
+            .l2-right-panel { flex: 1; height: 50vh; }
+            
             .mapping-container { flex-direction: column; }
+            .mapping-left { height: 30vh; flex: none; }
+            .mapping-right { flex: 1; height: 40vh; }
+            
+            .doc-paper { padding: 15px; }
+            .task-area { padding: 15px; }
         }
     </style>
 </head>
@@ -264,17 +296,21 @@
 
             <div id="stage">
                 <div id="wrong-fx"></div>
-                <div id="fighter-p1" class="anim-idle-p1">
-                    <div class="p1-hair"></div><div class="p1-headband"></div>
-                    <div class="p1-leg p1-leg-back"></div><div class="p1-arm p1-punch-arm"><div class="p1-fist"></div></div><div class="p1-leg p1-leg-front"></div>
-                    <div class="p1-body"></div><div class="p1-head"></div><div class="p1-punching-arm-extended"></div>
+                <div class="f-wrap">
+                    <div id="fighter-p1" class="anim-idle-p1">
+                        <div class="p1-hair"></div><div class="p1-headband"></div>
+                        <div class="p1-leg p1-leg-back"></div><div class="p1-arm p1-punch-arm"><div class="p1-fist"></div></div><div class="p1-leg p1-leg-front"></div>
+                        <div class="p1-body"></div><div class="p1-head"></div><div class="p1-punching-arm-extended"></div>
+                    </div>
                 </div>
                 <div id="hit-fx-p2" class="hit-effect arcade-font" style="right: 18%;">PERFECT!</div>
                 <div id="p2-projectile">文</div>
                 <div id="hit-fx-p1" class="hit-effect arcade-font" style="left: 18%; color: #ef4444;">大意!</div>
-                <div id="fighter-p2">
-                    <div class="p2-arm p2-arm-back"></div><div class="p2-leg p2-leg-back"></div>
-                    <div class="p2-body"></div><div class="p2-leg p2-leg-front"></div><div class="p2-arm p2-arm-front"></div><div class="p2-head"></div>
+                <div class="f-wrap">
+                    <div id="fighter-p2">
+                        <div class="p2-arm p2-arm-back"></div><div class="p2-leg p2-leg-back"></div>
+                        <div class="p2-body"></div><div class="p2-leg p2-leg-front"></div><div class="p2-arm p2-arm-front"></div><div class="p2-head"></div>
+                    </div>
                 </div>
             </div>
 
@@ -612,13 +648,12 @@
         document.addEventListener('click', initAudio, { once: true });
         function showToast(msg) { const toast = document.getElementById('l2-toast'); document.getElementById('l2-toast-msg').innerText = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3500); }
 
-        // ================= LEVEL 1 (格鬥邏輯 - Completely Cleaned) =================
+        // ================= LEVEL 1 (格鬥邏輯) =================
         const l1Questions = [{stage:1,sName:"文書入門",q:"對比電話邀請，正式邀請信更顯得：",options:["直接了解","容易明瞭","具吸引力","誠意拳拳"],correct:3,feedbacks:["錯！電話才是「最直接」的，信件需要郵寄時間。","不對。精心撰寫的信件用語正式，不一定比口語「更容易明瞭」。","可惜。吸引力取決於內容和設計，正式信件強調的是莊重感。","正確！邀請信需要花時間撰寫與郵寄，比起口頭邀請更能體現主辦方的重視與誠意。"]},{stage:1,sName:"文書入門",q:"為了體現誠意，信中「提出邀請原因」應針對對方的什麼？",options:["所屬機構","身分銜頭","專長貢獻","以上皆是"],correct:3,feedbacks:["不夠全面。雖然提及機構是禮貌，但只看機構會顯得不夠個人化。","不夠精準。提及職銜是必須，但強調其內在價值更有誠意。","雖然這是核心，但若能結合其身分和機構會更完美。","正確！綜合提及對方的所屬機構、身分職銜以及最關鍵的「專長和貢獻」，能顯示出你是認真研究過對方，而非泛泛邀請，誠意最足。"]},{stage:1,sName:"文書入門",q:"假如邀請對方出席活動，下列哪項資料不需要在信中「具體明確」？",options:["活動目的","主辦機構背景","性質和流程","日期時間地點"],correct:1,feedbacks:["錯誤。活動目的是否正當、有意義，是受邀者決定出席的關鍵。","正確！在正文中，主辦機構的名字必須明確，但其詳細的「歷史背景」通常不需贅述。","不對。不知道活動性質和具體流程，對方無法準備。","大錯！這是活動最基本的後勤資訊，絕對不能含糊。"]},{stage:1,sName:"文書入門",q:"「敬請屆時撥冗出席為荷」句中「為荷」的意思是：",options:["期待回覆","表示感謝","增添榮耀","無任歡迎"],correct:1,feedbacks:["不對。那是「靜候佳音」的意思。","正確！「為荷」是傳統公文用語，「荷」本義為負擔、承受，引申為承受恩惠。在此處用作結尾，表示「（如果您能出席）我將把這當作是對我的恩惠，非常感謝」。","錯誤。那是「蓬蓽生輝」或「倍增光寵」的意思。","可惜。那是表達歡迎程度，與「感謝」不同。"]},{stage:2,sName:"結構試煉",q:"下列哪一項不是寫好邀請信開首段的要點？",options:["交代舉辦背景/目的","說明活動目的意義","提出邀請意願","回顧對方過去成就"],correct:3,feedbacks:["錯誤。這是開首段「交代發信目的」的基本要求。","可惜。扼要說明意義能吸引對方繼續閱讀，是入門要點。","不對。第一段就應開門見山提出邀請，不能拖泥帶水。","正確！開首段應簡潔。對方的成就應放在主體段落，作為「為什麼要邀請您」的理由，放在開頭會顯得雜亂。"]},{stage:2,sName:"結構試煉",q:"如果受邀請者對發出邀請的機構不熟悉，可以在第一段：",options:["簡單介紹自己機構","預測對方沒興趣","略過直接提出邀請","強調活動商業價值"],correct:0,feedbacks:["正確！這是為了建立信任感。簡短介紹自己機構的性質或地位，增加活動的可信度。","錯！這太消極了，公文中不會出現這種假設。","危險。對方如果不認識你，很可能把你當成詐騙。","不妥。正式邀請信通常強調學術、公益或行業交流意義。"]},{stage:2,sName:"結構試煉",q:"一般來說，邀請信寫作日期應於活動前多久發出？",options:["一天前","十天前","半個月前","一個半月前"],correct:3,feedbacks:["太扯了！除非是臨時緊急會議，否則極不禮貌。","不夠。對方通常行程繁忙，十天前通常已經排滿。","雖然勉強可以，但時間仍顯倉促。","正確！這是一個專業且禮貌的時間點。給予對方足夠的時間調整行程。"]},{stage:3,sName:"結構試煉",q:"應該給予受邀請對象大約多長時間考慮和回覆？",options:["一星期","兩星期","三星期","一個月"],correct:1,feedbacks:["稍微短了些。除非活動很趕，否則應多給點彈性。","正確！這是公認的標準專業時間。既給予對方足夠時間確認行程，也不會拖太久。","太長了。會導致統計工作拖延。","太誇張了。不需要一個月。"]},{stage:3,sName:"終極決戰",q:"填空：素仰 貴公司產品款式及質量俱佳，___海內外。",options:["流行","推崇","享譽","聞名"],correct:2,feedbacks:["格調不夠。「流行」通常形容時裝或潮流。","語意不通。「推崇」是被動的。","正確！「享譽」意思是「享有盛譽（高的聲譽）」。最適合用來正式且高度讚揚。","不夠精準。「聞名」只是有名，但不一定是好名聲。"]},{stage:3,sName:"終極決戰",q:"填空：本公司誠邀 閣下撥冗___是次展覽會，並擔任主禮嘉賓。",options:["出席","光顧","惠顧","出現"],correct:0,feedbacks:["正確！邀請對方「出席展覽會並擔任嘉賓」是標準搭配。","錯！「光顧」是用於商店形容顧客，極不禮貌。","大錯！「惠顧」是請顧客光臨買東西，用於邀請嘉賓是嚴重失儀。","語境不合。「出現」過於口語且毫無敬意，正式邀請信中絕對不能使用。"]},{stage:3,sName:"終極決戰",q:"絕殺結尾：如蒙俯允，_____。",options:["至為銘感","不勝枚舉","非常敬佩","萬分激動"],correct:0,feedbacks:["正確！此為正式公文敬語，意思是「如果能得到您的答應，我將會感激不盡」。莊重得體。","大錯。「不勝枚舉」是形容數量很多。","不妥。這是私人語氣，公文中不會在結尾只說「敬佩」。","太私人化。「萬分激動」顯得不夠穩重。"]}];
         
         let l1_currentQIndex=0, l1_hpP1=100, l1_hpP2=100, l1_score=0, l1_combo=0, l1_isAnimating=false, l1_isFeedbackOpen=false;
         
         function updateL1Score(p){
-            // 修正計算問題：確保強制使用數字轉型進行加減
             l1_score = Number(l1_score) + Number(p);
             const sv = document.getElementById('score-val');
             sv.textContent = l1_score;
@@ -626,7 +661,6 @@
             else if(l1_score < 0) sv.style.color = '#ef4444';
             else sv.style.color = 'var(--text-gold)';
             
-            // 動態浮動分數特效 (CSS已修復)
             const floater = document.createElement('div');
             floater.className = 'score-anim';
             floater.textContent = Number(p) > 0 ? '+' + p : p;
@@ -788,21 +822,18 @@
             if(document.getElementById('l2-bank-'+l2CurrentPanel)) document.getElementById('l2-bank-'+l2CurrentPanel).classList.add('active');
             document.getElementById('dot-'+l2CurrentPanel).classList.add('active');
             
-            // Only init if it's the highest panel being played for the first time
             if(num === highestL2Panel && num !== 5) {
                 initL2Panel(num);
             } else if (num === 5) {
                 document.getElementById('l2-right-wrapper').style.display = 'none';
                 if(document.querySelectorAll('.mapping-pill').length === 0) populateFinalMapping(); 
                 
-                // Keep expanded view if already completed
                 if(highestL2Panel === 5 && sourceEmptyCheck()) {
                     document.querySelector('.mapping-right').classList.add('expanded-view');
                     document.getElementById('l2-mapping-source').style.display = 'none';
                 }
             }
             
-            // UI Toggle
             if(num === 5) {
                 document.getElementById('l2-right-wrapper').style.display = 'none';
                 document.getElementById('l2-word-bank').style.display = 'none';
@@ -852,11 +883,9 @@
             }
         }
 
-        // L2 年份手動輸入驗證
         function checkYearInput(btn) {
             if(btn.classList.contains('correct')) return;
             const val = document.getElementById('input-year').value.trim();
-            // 允許 40 或 42 等合理答案 (原定答案為 40)
             if(val === '40' || val === '42' || val === '43') { 
                 playSound('ding');
                 btn.classList.add('correct');
@@ -876,7 +905,6 @@
             }
         }
 
-        // L2 Click-Slot Focus
         document.querySelectorAll('#level2-view .click-slot:not(.inline-blank), #level2-view .l2-blank').forEach(slot => {
             slot.addEventListener('click', function() {
                 if(this.classList.contains('correct')) return;
@@ -887,10 +915,9 @@
             });
         });
 
-        // L2 Clickable Text & Cards (Left Panel Steps 1, 2, 4)
         document.querySelectorAll('.clickable-text, .clickable-card').forEach(textSpan => {
             textSpan.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent overlap
+                e.stopPropagation(); 
                 if(this.classList.contains('used')) return; 
                 
                 if(!l2ActiveSlot) { showToast("請先點選右側的黃色目標空格！"); return; }
@@ -913,7 +940,6 @@
             });
         });
 
-        // L2 Word Bank (Step 3)
         document.querySelectorAll('#level2-view .l2-word').forEach(btn => {
             btn.addEventListener('click', function() {
                 if(!l2ActiveSlot) { showToast("請先點選上方任務區的黃色空格！"); return; }
@@ -976,17 +1002,16 @@
             navToPanel(l2CurrentPanel + 1);
         }
 
-        // L2 Step 5 (Mapping logic - using explicit targets)
         let l2ActivePill = null;
         function populateFinalMapping() {
             document.getElementById('data-bank-bar').style.display = 'none'; 
             const source = document.getElementById('l2-mapping-source');
-            source.innerHTML = '<div style="font-weight:bold; color:#b45309; margin-bottom:10px;">📂 點擊分配資料卡片：</div>'; // reset
+            source.innerHTML = '<div style="font-weight:bold; color:#b45309; margin-bottom:10px;">📂 點擊分配資料卡片：</div>'; 
             
             collectedData.forEach((item, idx) => {
                 const pill = document.createElement('div');
                 pill.className = 'mapping-pill'; pill.innerText = item.text; pill.dataset.id = idx;
-                pill.dataset.target = item.target; // Use explicit target
+                pill.dataset.target = item.target; 
 
                 pill.addEventListener('click', function() {
                     playSound('hit');
@@ -1008,21 +1033,17 @@
                         this.style.borderColor = "#10b981";
                         l2ActivePill.classList.add('used'); l2ActivePill = null;
                         
-                        // Show "自我增值" button if slot is filled
                         const btn = this.querySelector('.self-improve-btn');
                         if (btn) btn.classList.add('show');
 
-                        // Full completion check
                         if(source.querySelectorAll('.mapping-pill:not(.used)').length === 0) {
                             document.getElementById('dot-5').classList.add('done');
                             playSound('ding');
                             
-                            // 放大架構特效
                             source.style.display = 'none';
                             const rightSide = document.querySelector('.mapping-right');
                             rightSide.classList.add('expanded-view');
                             
-                            // Add Banner instead of overlay
                             if(!document.getElementById('l2-success-banner')) {
                                 const successBanner = document.createElement('div');
                                 successBanner.id = "l2-success-banner";
@@ -1031,7 +1052,6 @@
                                 rightSide.prepend(successBanner);
                             }
                             
-                            // Ensure all improve buttons are shown
                             document.querySelectorAll('.self-improve-btn').forEach(b => b.classList.add('show'));
                         }
                     } else {
@@ -1051,7 +1071,6 @@
                 });
             });
             
-            // Fix modal buttons event bubbling
             document.querySelectorAll('.self-improve-btn').forEach(btn => {
                 const newBtn = btn.cloneNode(true);
                 btn.parentNode.replaceChild(newBtn, btn);
