@@ -13,14 +13,13 @@
             --l2-bg: #f1f5f9; --l2-panel: #ffffff; --l2-primary: #3b82f6; --l2-accent: #10b981;
         }
 
-        /* 修正手機版滑動與視口高度問題 */
-        body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Noto Sans TC', sans-serif; font-weight: 700; display: flex; justify-content: center; align-items: center; min-height: 100dvh; overflow-x: hidden; overflow-y: auto; user-select: none; -webkit-tap-highlight-color: transparent; }
+        /* 修正手機版滑動與視口高度問題，加入 fallback height */
+        body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Noto Sans TC', sans-serif; font-weight: 700; display: flex; justify-content: center; align-items: center; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; overflow-y: auto; user-select: none; -webkit-tap-highlight-color: transparent; }
         
-        /* 允許輸入框可以選取與操作 */
         input { user-select: auto; }
 
-        #level1-view { width: 100%; min-height: 100dvh; display: flex; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;}
-        #level2-view { width: 100%; display: none; justify-content: center; align-items: center; background-color: var(--l2-bg); color: #333; height: 100dvh; flex-direction: column; padding: 15px; box-sizing: border-box; }
+        #level1-view { width: 100%; min-height: 100vh; min-height: 100dvh; display: flex; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;}
+        #level2-view { width: 100%; display: none; justify-content: center; align-items: center; background-color: var(--l2-bg); color: #333; height: 100vh; height: 100dvh; flex-direction: column; padding: 15px; box-sizing: border-box; }
 
         /* ================= LEVEL 1: 職場格鬥 ================= */
         #arcade-cabinet { width: 100%; max-width: 1000px; height: 100%; max-height: 800px; background: linear-gradient(to bottom, #4c1d95, #000 70%, #2e1065); border: 6px solid #6d28d9; border-radius: 12px; position: relative; display: flex; flex-direction: column; box-shadow: 0 0 80px rgba(109, 40, 217, 0.6); overflow: hidden; }
@@ -39,10 +38,8 @@
 
         #stage { flex: 1; position: relative; background: radial-gradient(circle at center, #2e1065 0%, #000 100%); border-bottom: 8px solid #4338ca; overflow: hidden; display: flex; justify-content: space-around; align-items: flex-end; padding-bottom: 40px; } 
         
-        /* 角色外層包裹區塊 (恢復彈性排版，解決電腦版消失問題) */
         .f-wrap { display: flex; justify-content: center; align-items: flex-end; transition: transform 0.3s ease; transform-origin: bottom center; }
 
-        /* 角色繪製 */
         #fighter-p1 { position: relative; width: 120px; height: 220px; transition: transform 0.2s, filter 0.2s; transform: scaleX(-1); } 
         .p1-head { width: 48px; height: 48px; background: var(--p1-skin); border-radius: 8px; position: absolute; top: 72px; left: 36px; box-shadow: 0 4px 0 rgba(0,0,0,0.2); z-index: 2; } 
         .p1-head::before { content:''; position: absolute; top: 12px; left: 8px; width: 6px; height: 10px; background: #000; box-shadow: 24px 0 0 #000; border-radius: 2px; } 
@@ -96,7 +93,6 @@
         .option-btn:hover:not(:disabled) { background: linear-gradient(to bottom, #334155, #1e293b); border-color: var(--text-gold); transform: scale(1.02); box-shadow: 0 0 10px rgba(251, 191, 36, 0.3); } 
         .option-btn:disabled { opacity: 0.5; cursor: not-allowed; } .option-btn.correct-blink { background: #166534 !important; border-color: #4ade80 !important; animation: flash 0.15s 3; } .option-btn.wrong-blink { background: #991b1b !important; border-color: #f87171 !important; animation: flash 0.15s 3; }
         
-        /* 修正回饋面板高度與滾動 */
         #feedback-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); z-index: 30; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 15px 20px; box-sizing: border-box; border-top: 5px solid #dc2626; } 
         #feedback-header { font-family: 'Press Start 2P', monospace; font-size: 1.3em; color: #ef4444; margin-bottom: 15px; text-shadow: 2px 2px 0 #450a0a; flex-shrink: 0; } 
         #feedback-content { width: 100%; max-width: 800px; background: rgba(30, 41, 59, 0.8); border: 2px solid #475569; border-radius: 10px; padding: 15px 20px; margin-bottom: 15px; font-size: 1.1em; line-height: 1.6; font-family: 'Noto Sans TC', sans-serif; font-weight: 400; flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; } 
@@ -126,7 +122,6 @@
         .l2-left-panel { flex: 4; padding: 25px; overflow-y: auto; background: #fff; border-right: 2px solid #e2e8f0; position: relative; transition: 0.5s; -webkit-overflow-scrolling: touch; }
         .doc-paper { background: #fff; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #cbd5e1; position: relative; margin-bottom: 20px; font-family: 'PMingLiU', 'MingLiU', serif; line-height: 1.8; color: #333; } .doc-paper::before { content: ''; position: absolute; top: 0; left: 20px; bottom: 0; width: 2px; border-left: 2px solid #fca5a5; } .doc-title { font-size: 1.3em; font-weight: bold; color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; margin-bottom: 15px; margin-left: 15px; } .doc-content { margin-left: 15px; font-size: 1.1em; } .doc-content ul { padding-left: 20px; margin: 5px 0; }
         
-        /* 隱藏式點擊文本/卡片 */
         .clickable-text { cursor: pointer; transition: 0.2s; border-radius: 4px; padding: 0 2px; display: inline; border-bottom: 1px solid transparent; }
         .clickable-text:hover { background: rgba(253, 224, 71, 0.4); border-bottom: 2px dashed #ca8a04; }
         .clickable-text.used { background: #d1fae5; color: #065f46; border: none; }
@@ -147,14 +142,12 @@
         .click-slot.error { animation: shake 0.4s, flash-red 0.4s; }
         .inline-blank { min-width: 60px; height: 25px; padding: 0 8px; font-size: 0.95em; }
 
-        /* L2 底部資料收集庫 */
         .data-bank-bar { flex-shrink: 0; background: #1e293b; color: #fff; padding: 10px 20px; display: flex; align-items: center; gap: 15px; border-top: 3px solid #cbd5e1; z-index: 20; }
         .data-bank-title { font-weight: bold; color: #fbbf24; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .data-pills-container { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
         .data-pill { background: #3b82f6; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.2); animation: popIn 0.4s; }
         @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        /* 選擇題樣式 */
         .mcq-block { margin-top: 15px; }
         .mcq-title { font-weight: bold; color: #1e3a8a; margin-bottom: 10px; font-size: 0.95em; }
         .mcq-options { display: flex; flex-direction: column; gap: 8px; }
@@ -163,27 +156,24 @@
         .mcq-btn.correct { background: #d1fae5; border-color: #10b981; color: #065f46; }
         .mcq-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; animation: shake 0.4s; }
         
-        /* 內嵌選擇題群組 */
         .inline-mcq-group { margin-bottom: 15px; background: #f1f5f9; padding: 10px; border-radius: 8px; border: 1px dashed #cbd5e1; }
         .inline-mcq-group .mcq-options { flex-direction: row; flex-wrap: wrap; }
         .inline-mcq-group .mcq-btn { padding: 6px 12px; font-size: 0.9em; flex: 1; text-align: center; }
 
-        /* Word Bank (Step 3) */
         .word-bank-area { background: #fff; border-top: 2px solid #e2e8f0; padding: 15px; box-shadow: 0 -5px 15px rgba(0,0,0,0.03); flex-shrink: 0; }
         .words-grid { display: flex; flex-wrap: wrap; gap: 8px; }
         .l2-word { padding: 6px 12px; background: #f8fafc; border: 2px solid #94a3b8; border-radius: 20px; color: #334155; font-weight: bold; cursor: pointer; transition: 0.2s; font-size:0.9em; }
         .l2-word:hover { background: var(--l2-primary); color: #fff; border-color: var(--l2-primary); transform: translateY(-2px); }
         .l2-word.used { opacity: 0; pointer-events: none; transform: scale(0.5); }
 
-        /* 覆蓋層 */
         .l2-overlay { position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.95); z-index: 50; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         .l2-overlay h2 { font-size: 2.5em; color: var(--l2-accent); margin-bottom: 10px; } .l2-overlay p { font-size: 1.3em; color: #475569; margin-bottom: 30px; }
         .btn-next-panel { background: var(--l2-primary); color: white; border: none; padding: 15px 40px; font-size: 1.2em; font-weight: bold; border-radius: 30px; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); margin: 5px; } .btn-next-panel:hover { background: #2563eb; transform: scale(1.05); }
-        .panel-content { display: none; } .panel-content.active { display: block; animation: fadeIn 0.4s; } @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to {opacity:1; transform: translateY(0); } }
+        .panel-content { display: none; } .panel-content.active { display: flex; flex-direction: column; animation: fadeIn 0.4s; height: 100%; } @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to {opacity:1; transform: translateY(0); } }
         #l2-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #ef4444; color: white; padding: 15px 30px; border-radius: 30px; font-size: 1.1em; font-weight: bold; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4); display: flex; align-items: center; gap: 10px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000; } #l2-toast.show { transform: translateX(-50%) translateY(0); }
 
         /* ================= LEVEL 2 Step 5: 結構重組與自我增值 ================= */
-        .mapping-container { display: flex; gap: 20px; height: 100%; position: relative; transition: 0.5s;}
+        .mapping-container { display: flex; gap: 20px; height: 100%; flex: 1; position: relative; transition: 0.5s;}
         .mapping-left { flex: 4; background: #fdf8f5; border-radius: 10px; padding: 20px; border: 2px dashed #cbd5e1; display:flex; flex-direction:column; gap:10px; overflow-y:auto; transition: 0.5s; -webkit-overflow-scrolling: touch;}
         .mapping-pill { background: #3b82f6; color: white; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: 0.2s; }
         .mapping-pill:hover { transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
@@ -192,12 +182,10 @@
         
         .mapping-right { flex: 6; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding-right: 10px; transition: 0.5s; -webkit-overflow-scrolling: touch;}
         
-        /* 架構放大特效 (無遮擋設計) */
         .mapping-right.expanded-view { flex: 10; padding: 0 20px; }
         .mapping-right.expanded-view .structure-slot { padding: 20px; border-width: 3px; margin-bottom: 5px; }
         .mapping-right.expanded-view .slot-title { font-size: 1.1em; padding-bottom: 10px;}
 
-        /* 高度改為 auto 讓內容自由延伸 */
         .structure-slot { background: #fff; border: 2px solid #94a3b8; border-radius: 8px; padding: 12px; height: auto; display: flex; flex-direction: column; justify-content: flex-start; transition: 0.3s; position: relative; cursor: pointer;}
         .structure-slot:hover { border-color: #3b82f6; background: #eff6ff; }
         .structure-slot.filled { background: #f0fdf4; border-color: #10b981; cursor: default; }
@@ -205,21 +193,20 @@
         .slot-title { font-size: 0.95em; color: #1e3a8a; margin-bottom: 5px; font-weight: bold; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;}
         .slot-content { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
         
-        /* 視覺化的資料盒 Data Box */
         .data-box { background: #d1fae5; padding: 10px 15px; border-radius: 8px; border: 2px solid #10b981; font-size: 0.95em; line-height: 1.5; color: #065f46; word-break: break-word; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: bold; animation: fadeIn 0.4s;}
 
         .self-improve-btn { background: #f59e0b; color: #fff; border: none; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: none; margin-left: auto; flex-shrink: 0;}
         .self-improve-btn.show { display: inline-flex; align-items: center; gap: 5px; animation: popIn 0.3s; }
         .self-improve-btn:hover { background: #d97706; transform: scale(1.05); }
 
-        #l2-success-banner { display:none; background:#10b981; color:white; padding:15px; text-align:center; font-weight:bold; border-radius:8px; margin-bottom:15px; animation: popIn 0.5s; font-size:1.05em; box-shadow: 0 4px 10px rgba(16,185,129,0.3);}
+        #l2-success-banner { display:none; background:#10b981; color:white; padding:15px; text-align:center; font-weight:bold; border-radius:8px; margin-bottom:15px; animation: popIn 0.5s; font-size:1.05em; box-shadow: 0 4px 10px rgba(16,185,129,0.3); flex-shrink: 0;}
 
         /* 自我增值 Modal */
         #improve-modal { position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
         .modal-box { background: #fff; width: 90%; max-width: 800px; max-height: 90vh; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 15px 50px rgba(0,0,0,0.3); border: 3px solid #f59e0b; }
         .modal-header { background: #fdf8f5; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; flex-shrink: 0; }
         .modal-title { color: #b45309; font-size: 1.3em; font-weight: 900; margin: 0; }
-        .modal-close { background: #ef4444; color: #fff; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer; }
+        .modal-close { background: #ef4444; color: #fff; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer; flex-shrink: 0; }
         .modal-content { padding: 20px; overflow-y: auto; flex: 1; background: #f8fafc; -webkit-overflow-scrolling: touch; }
         
         .improve-item { background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
@@ -236,7 +223,6 @@
             #level1-view { padding: 0; }
             #stage { height: 260px; flex: none; padding-bottom: 20px; } 
             
-            /* 將公仔等比例縮小 */
             .f-wrap { transform: scale(0.65); margin: 0 -20px; }
             
             #hud { flex-wrap: wrap; } 
@@ -252,11 +238,16 @@
             
             .l2-workspace { flex-direction: column; } 
             .l2-left-panel { flex: none; height: 35vh; border-right: none; border-bottom: 3px solid #cbd5e1; } 
-            .l2-right-panel { flex: 1; height: 50vh; }
             
-            .mapping-container { flex-direction: column; }
-            .mapping-left { height: 30vh; flex: none; }
-            .mapping-right { flex: 1; height: 40vh; }
+            /* 第五步「架構」專屬佈局：取消限制 35vh，讓其填滿可用空間 */
+            .l2-left-panel.step5-mode { height: auto; flex: 1; border-bottom: none; display: flex; flex-direction: column; padding: 15px 10px; }
+            .l2-left-panel.step5-mode .panel-content.active { display: flex; flex-direction: column; flex: 1; }
+            .mapping-container { flex-direction: column; flex: 1; }
+            /* 上方面板放資料（限制最大高度可滾動），下方面板放架構（填滿剩餘空間可滾動） */
+            .mapping-left { height: 25vh; flex: none; border-bottom: 2px solid #cbd5e1; margin-bottom: 10px; padding-bottom: 10px; }
+            .mapping-right { flex: 1; height: auto; padding-right: 5px; }
+
+            .l2-right-panel { flex: 1; height: 50vh; }
             
             .doc-paper { padding: 15px; }
             .task-area { padding: 15px; }
@@ -348,7 +339,7 @@
             </div>
 
             <div class="l2-workspace">
-                <div class="l2-left-panel">
+                <div class="l2-left-panel" id="main-left-panel">
                     
                     <div id="l2-doc-1" class="panel-content active">
                         <div class="doc-paper">
@@ -425,12 +416,12 @@
                         </div>
                     </div>
 
-                    <div id="l2-doc-5" class="panel-content" style="height:100%;">
+                    <div id="l2-doc-5" class="panel-content">
                         <div class="mapping-container">
                             <div class="mapping-left" id="l2-mapping-source">
                                 <div style="font-weight:bold; color:#b45309; margin-bottom:10px;">📂 點擊分配資料卡片：</div>
-                                </div>
-                            <div class="mapping-right">
+                            </div>
+                            <div class="mapping-right" id="l2-mapping-right">
                                 <div id="l2-success-banner">
                                     🎉 完美重組！所有資料已就位，請點擊各段落的「💡自我增值」探索更多進階句型與排版知識吧！
                                 </div>
@@ -824,21 +815,24 @@
             
             if(num === highestL2Panel && num !== 5) {
                 initL2Panel(num);
-            } else if (num === 5) {
-                document.getElementById('l2-right-wrapper').style.display = 'none';
-                if(document.querySelectorAll('.mapping-pill').length === 0) populateFinalMapping(); 
-                
-                if(highestL2Panel === 5 && sourceEmptyCheck()) {
-                    document.querySelector('.mapping-right').classList.add('expanded-view');
-                    document.getElementById('l2-mapping-source').style.display = 'none';
-                }
             }
+            
+            const leftPanel = document.getElementById('main-left-panel');
             
             if(num === 5) {
                 document.getElementById('l2-right-wrapper').style.display = 'none';
                 document.getElementById('l2-word-bank').style.display = 'none';
+                leftPanel.classList.add('step5-mode'); // 啟用第 5 步的彈性高度模式
+                
+                if(document.querySelectorAll('.mapping-pill').length === 0) populateFinalMapping(); 
+                
+                if(highestL2Panel === 5 && sourceEmptyCheck()) {
+                    document.getElementById('l2-mapping-right').classList.add('expanded-view');
+                    document.getElementById('l2-mapping-source').style.display = 'none';
+                }
             } else {
                 document.getElementById('l2-right-wrapper').style.display = 'flex';
+                leftPanel.classList.remove('step5-mode'); // 取消彈性高度，恢復預設的 35vh
                 if(num === 3) document.getElementById('l2-word-bank').style.display = 'block';
                 else document.getElementById('l2-word-bank').style.display = 'none';
             }
@@ -895,7 +889,7 @@
                 input.style.borderColor = '#10b981';
                 input.style.backgroundColor = '#d1fae5';
                 input.style.color = '#065f46';
-                addToCollection('本集團在香港成立逾' + val + '年', 'intro');
+                addToCollection('本集團成立逾' + val + '年', 'intro'); // 依據使用者紀錄更新
                 checkL2PanelComplete();
             } else {
                 playSound('hurt');
@@ -1041,7 +1035,7 @@
                             playSound('ding');
                             
                             source.style.display = 'none';
-                            const rightSide = document.querySelector('.mapping-right');
+                            const rightSide = document.getElementById('l2-mapping-right');
                             rightSide.classList.add('expanded-view');
                             
                             if(!document.getElementById('l2-success-banner')) {
