@@ -239,11 +239,9 @@
             .l2-workspace { flex-direction: column; } 
             .l2-left-panel { flex: none; height: 35vh; border-right: none; border-bottom: 3px solid #cbd5e1; } 
             
-            /* 第五步「架構」專屬佈局：取消限制 35vh，讓其填滿可用空間 */
             .l2-left-panel.step5-mode { height: auto; flex: 1; border-bottom: none; display: flex; flex-direction: column; padding: 15px 10px; }
             .l2-left-panel.step5-mode .panel-content.active { display: flex; flex-direction: column; flex: 1; }
             .mapping-container { flex-direction: column; flex: 1; }
-            /* 上方面板放資料（限制最大高度可滾動），下方面板放架構（填滿剩餘空間可滾動） */
             .mapping-left { height: 25vh; flex: none; border-bottom: 2px solid #cbd5e1; margin-bottom: 10px; padding-bottom: 10px; }
             .mapping-right { flex: 1; height: auto; padding-right: 5px; }
 
@@ -345,7 +343,7 @@
                         <div class="doc-paper">
                             <div class="doc-title">寫作情景</div>
                             <div class="doc-content">
-                                致富世紀集團將於母親節在旗下大都會商場舉行<span class="clickable-text" data-val="「親親媽咪」親子烹飪比賽" data-target="action">「親親媽咪」親子烹飪比賽</span>。你是致富世紀集團公關部助理主任葉景文，請你根據以下資料，<span class="clickable-text" data-val="邀請周正中先生擔任「親親媽咪」親子烹飪比賽主席評判" data-target="action">構思以<span class="clickable-text" data-val="致富世紀集團公關部經理劉小鳳" data-target="signoff">致富世紀集團公關部經理劉小鳳</span>的名義寫一封邀請信，邀請香港飲食界名人<span class="clickable-text" data-val="周正中先生" data-target="salutation">周正中先生</span>擔任比賽的主席評判</span>。
+                                致富世紀集團將於母親節在旗下大都會商場舉行<span class="clickable-text" data-val="「親親媽咪」親子烹飪比賽" data-target="praise">「親親媽咪」親子烹飪比賽</span>。你是致富世紀集團公關部助理主任葉景文，請你根據以下資料，<span class="clickable-text" data-val="邀請周正中先生擔任「親親媽咪」親子烹飪比賽主席評判" data-target="action">構思以<span class="clickable-text" data-val="致富世紀集團公關部經理劉小鳳" data-target="signoff">致富世紀集團公關部經理劉小鳳</span>的名義寫一封邀請信，邀請香港飲食界名人<span class="clickable-text" data-val="周正中先生" data-target="salutation">周正中先生</span>擔任比賽的主席評判</span>。
                             </div>
                         </div>
                     </div>
@@ -435,15 +433,15 @@
                                     <div class="slot-content"></div>
                                 </div>
                                 <div class="structure-slot" data-slot="intro">
-                                    <div class="slot-title"><span>1. 引言 (公司簡介與活動目的)</span> <button class="self-improve-btn" onclick="openImproveModal('intro'); event.stopPropagation();">💡 自我增值</button></div>
+                                    <div class="slot-title"><span>1. 引言 (公司簡介與活動目的/邀請背景)</span> <button class="self-improve-btn" onclick="openImproveModal('intro'); event.stopPropagation();">💡 自我增值</button></div>
                                     <div class="slot-content"></div>
                                 </div>
                                 <div class="structure-slot" data-slot="praise">
-                                    <div class="slot-title"><span>2. 主體 (讚揚受文者)</span> <button class="self-improve-btn" onclick="openImproveModal('praise'); event.stopPropagation();">💡 自我增值</button></div>
+                                    <div class="slot-title"><span>2. 主體 (說明邀請原因/讚揚受文者)</span> <button class="self-improve-btn" onclick="openImproveModal('praise'); event.stopPropagation();">💡 自我增值</button></div>
                                     <div class="slot-content"></div>
                                 </div>
                                 <div class="structure-slot" data-slot="action">
-                                    <div class="slot-title"><span>3. 主體 (提出任務詳情)</span> <button class="self-improve-btn" onclick="openImproveModal('action'); event.stopPropagation();">💡 自我增值</button></div>
+                                    <div class="slot-title"><span>3. 主體 (指出對方出席的作用/意義與活動詳情)</span> <button class="self-improve-btn" onclick="openImproveModal('action'); event.stopPropagation();">💡 自我增值</button></div>
                                     <div class="slot-content"></div>
                                 </div>
                                 <div class="structure-slot" data-slot="end">
@@ -682,7 +680,7 @@
             if(q.stage === 3){ bh.style.backgroundColor="var(--p2-angry)"; bb.style.borderTopColor="#4a0404"; }
             
             const qb = document.getElementById('question-box');
-            if(qb) qb.innerHTML = `<span class="arcade-font" style="color:#aaa;font-size:0.8em;margin-right:10px;">Q${l1_currentQIndex+1}.</span>` + q.q;
+            if(qb) qb.innerHTML = `<span class=\"arcade-font\" style=\"color:#aaa;font-size:0.8em;margin-right:10px;\">Q${l1_currentQIndex+1}.</span>` + q.q;
             
             for(let i=0; i<4; i++){
                 const b = document.getElementById(`btn-${i}`);
@@ -749,7 +747,7 @@
             const overlay = document.getElementById('feedback-overlay');
             const wr = q.feedbacks[idx]; const ca = q.options[q.correct];
             let ce = q.feedbacks[q.correct].replace(/正確！\s*/g,'');
-            document.getElementById('feedback-content').innerHTML = `<div class="fb-wrong-section"><span class="fb-title" style="color:#ef4444;">❌ 為什麼你選的錯了：</span><br>${wr}</div><div class="fb-correct-section"><span class="fb-title" style="color:#22c55e;">✅ 正確答案應該是：【${ca}】</span><br><span style="color:#e2e8f0;display:inline-block;margin-top:8px;">💡 解析：${ce}</span></div>`;
+            document.getElementById('feedback-content').innerHTML = `<div class=\"fb-wrong-section\"><span class=\"fb-title\" style=\"color:#ef4444;\">❌ 為什麼你選的錯了：</span><br>${wr}</div><div class=\"fb-correct-section\"><span class=\"fb-title\" style=\"color:#22c55e;\">✅ 正確答案應該是：【${ca}】</span><br><span style=\"color:#e2e8f0;display:inline-block;margin-top:8px;\">💡 解析：${ce}</span></div>`;
             overlay.style.display = 'flex';
         }
         
@@ -777,11 +775,11 @@
             
             if(win){
                 playSound('hit'); title.innerHTML = 'K.O. <br> 第一關完成！'; title.style.color = 'var(--text-gold)';
-                text.innerHTML = `格鬥得分：<span class="arcade-font" style="color:#10b981; font-size:1.5em;">${l1_score}</span> 分<br><br>幹得好！你擊敗了魔王，<br>現在讓我們進入資料室，<br>開始拆解真實的邀請信資料吧！`;
+                text.innerHTML = `格鬥得分：<span class=\"arcade-font\" style=\"color:#10b981; font-size:1.5em;\">${l1_score}</span> 分<br><br>幹得好！你擊敗了魔王，<br>現在讓我們進入資料室，<br>開始拆解真實的邀請信資料吧！`;
                 bS.style.display = 'none'; bN.style.display = 'inline-block';
             }else{
                 playSound('down'); title.innerHTML = 'GAME OVER'; title.style.color = '#ef4444';
-                text.innerHTML = `格鬥得分：<span class="arcade-font" style="color:#ef4444; font-size:1.5em;">${l1_score}</span> 分<br><br>實習生不支倒地...👹<br>重新 INSERT COIN 挑戰！`;
+                text.innerHTML = `格鬥得分：<span class=\"arcade-font\" style=\"color:#ef4444; font-size:1.5em;\">${l1_score}</span> 分<br><br>實習生不支倒地...👹<br>重新 INSERT COIN 挑戰！`;
                 bS.style.display = 'inline-block'; bS.innerHTML = 'RETRY'; bN.style.display = 'none';
             }
         }
@@ -822,7 +820,7 @@
             if(num === 5) {
                 document.getElementById('l2-right-wrapper').style.display = 'none';
                 document.getElementById('l2-word-bank').style.display = 'none';
-                leftPanel.classList.add('step5-mode'); // 啟用第 5 步的彈性高度模式
+                leftPanel.classList.add('step5-mode'); 
                 
                 if(document.querySelectorAll('.mapping-pill').length === 0) populateFinalMapping(); 
                 
@@ -832,7 +830,7 @@
                 }
             } else {
                 document.getElementById('l2-right-wrapper').style.display = 'flex';
-                leftPanel.classList.remove('step5-mode'); // 取消彈性高度，恢復預設的 35vh
+                leftPanel.classList.remove('step5-mode'); 
                 if(num === 3) document.getElementById('l2-word-bank').style.display = 'block';
                 else document.getElementById('l2-word-bank').style.display = 'none';
             }
@@ -889,7 +887,7 @@
                 input.style.borderColor = '#10b981';
                 input.style.backgroundColor = '#d1fae5';
                 input.style.color = '#065f46';
-                addToCollection('本集團成立逾' + val + '年', 'intro'); // 依據使用者紀錄更新
+                addToCollection('本集團成立逾' + val + '年', 'intro'); 
                 checkL2PanelComplete();
             } else {
                 playSound('hurt');
@@ -1000,7 +998,7 @@
         function populateFinalMapping() {
             document.getElementById('data-bank-bar').style.display = 'none'; 
             const source = document.getElementById('l2-mapping-source');
-            source.innerHTML = '<div style="font-weight:bold; color:#b45309; margin-bottom:10px;">📂 點擊分配資料卡片：</div>'; 
+            source.innerHTML = '<div style=\"font-weight:bold; color:#b45309; margin-bottom:10px;\">📂 點擊分配資料卡片：</div>'; 
             
             collectedData.forEach((item, idx) => {
                 const pill = document.createElement('div');
@@ -1054,9 +1052,9 @@
                         let fb = "這份資料不屬於這個段落哦！";
                         if(expectedTarget === 'salutation') fb = "這是信件開頭的稱呼。";
                         if(expectedTarget === 'title') fb = "這是信件的主旨標題。";
-                        if(expectedTarget === 'intro') fb = "這是用來介紹背景或活動目的的內容。";
-                        if(expectedTarget === 'praise') fb = "這是用來讚揚對方成就的內容！";
-                        if(expectedTarget === 'action') fb = "這是活動詳情或出席意義，屬於提出要求的部分。";
+                        if(expectedTarget === 'intro') fb = "這是引言(公司簡介與活動目的/邀請背景)的部分。";
+                        if(expectedTarget === 'praise') fb = "這是主體(說明邀請原因/讚揚受文者)的部分！";
+                        if(expectedTarget === 'action') fb = "這是主體(指出對方出席的作用/意義與活動詳情)的部分。";
                         if(expectedTarget === 'end') fb = "聯絡人資訊應該放在信件的結語段落。";
                         if(expectedTarget === 'closing') fb = "這是信末的祝頌語！";
                         if(expectedTarget === 'signoff') fb = "發信人署名應該放在信件最末的下款處。";
@@ -1080,68 +1078,68 @@
         const improveData = {
             salutation: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">稱呼公式一：公司 ＋ 部門 ＋ 職銜 ＋ 姓名 ＋ 先生/女士 ＋ 提稱語 (如：台鑒)</div><div class="improve-example"><b>📝 應用例句：</b><br>致富世紀集團公關部經理劉小鳳女士台鑒：<br><br><i>💡 文言解釋：「台」是尊稱對方，「鑒」是請對方看信，「台鑒」即請對方察閱的意思。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">稱呼公式二：公司 ＋ 部門 ＋ 姓名 ＋ 職銜 ＋ 提稱語 (如：台鑒)</div><div class="improve-example"><b>📝 應用例句：</b><br>致富世紀集團公關部劉小鳳經理台鑒：<br><br><i>💡 文言解釋：「台」是尊稱對方，「鑒」是請對方看信，「台鑒」即請對方察閱的意思。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">稱呼公式一：公司 ＋ 部門 ＋ 職銜 ＋ 姓名 ＋ 先生/女士 ＋ 提稱語 (如：台鑒)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>致富世紀集團公關部經理劉小鳳女士台鑒：<br><br><i>💡 文言解釋：「台」是尊稱對方，「鑒」是請對方看信，「台鑒」即請對方察閱的意思。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">稱呼公式二：公司 ＋ 部門 ＋ 姓名 ＋ 職銜 ＋ 提稱語 (如：台鑒)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>致富世紀集團公關部劉小鳳經理台鑒：<br><br><i>💡 文言解釋：「台」是尊稱對方，「鑒」是請對方看信，「台鑒」即請對方察閱的意思。</i></div></div>
                 `
             },
             title: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">標題公式一：邀請 ＋ 動詞 ＋ 受邀項目</div><div class="improve-example"><b>📝 應用例句：</b><br>邀請擔任時裝表演主禮嘉賓<br>邀請擔任講座嘉賓<br>邀請出席禮品展覽會</div></div>
-                    <div class="improve-item"><div class="improve-phrase">標題公式二：受邀項目 ＋ 邀請信/函</div><div class="improve-example"><b>📝 應用例句：</b><br>第三屆亞洲科技展邀請信<br>年終酒會致辭邀請函</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">標題公式一：邀請 ＋ 動詞 ＋ 受邀項目</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>邀請擔任時裝表演主禮嘉賓<br>邀請擔任講座嘉賓<br>邀請出席禮品展覽會</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">標題公式二：受邀項目 ＋ 邀請信/函</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>第三屆亞洲科技展邀請信<br>年終酒會致辭邀請函</div></div>
                 `
             },
             intro: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">本公司專營……(業務)已於……(地點)設置廠房，頗具規模。</div><div class="improve-example"><b>📝 應用例句：</b><br>本公司專營食品加工業務，已於大埔設置廠房，頗具規模。</div></div>
-                    <div class="improve-item"><div class="improve-phrase">本公司產品遠銷海外，深受各地用戶青睞。</div><div class="improve-example"><b>📝 應用例句：</b><br>本集團的成衣產品遠銷海外，深受各地用戶青睞。</div></div>
-                    <div class="improve-item"><div class="improve-phrase">為了……(活動目的)，本公司現定於 X 月 X 日假 XXX舉辦 XXX。</div><div class="improve-example"><b>📝 應用例句：</b><br>為了增進親子感情，本集團現定於5月11日假大都會商場舉辦「親親媽咪」親子烹飪比賽。<br><br><i>💡 文言解釋：「假」即借用，在此指借用該場地。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">本公司專營……(業務)已於……(地點)設置廠房，頗具規模。</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>本公司專營食品加工業務，已於大埔設置廠房，頗具規模。</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">本公司產品遠銷海外，深受各地用戶青睞。</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>本集團的成衣產品遠銷海外，深受各地用戶青睞。</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">為了……(活動目的)，本公司現定於 X 月 X 日假 XXX舉辦 XXX。</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>為了增進親子感情，本集團現定於5月11日假大都會商場舉辦「親親媽咪」親子烹飪比賽。<br><br><i>💡 文言解釋：「假」即借用，在此指借用該場地。</i></div></div>
                 `
             },
             praise: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">💡 詞彙辨析：「素聞」 vs 「素仰」</div><div class="improve-example"><b>📝 素聞：</b>一直聽說。<br>側重於「客觀接收資訊」，語氣平實。<br><i>例：素聞 閣下在學界致力推廣STEM教育。</i><br><br><b>📝 素仰：</b>一直仰慕。<br>側重於「強烈敬意與推崇」，語氣極為莊重，特別適合用來邀請大師級貴賓。<br><i>例：素仰 閣下廚藝超卓，更榮獲「廚神」美譽。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">久仰 閣下... (仰慕已久)</div><div class="improve-example"><b>📝 應用例句：</b><br>久仰 閣下大名，今日特致函誠邀 閣下出席。<br><br><i>💡 文言解釋：「久仰」指仰慕已久。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">久聞 閣下... (聽說已久)</div><div class="improve-example"><b>📝 應用例句：</b><br>久聞 閣下對本地藝術發展貢獻良多，實乃業界楷模。<br><br><i>💡 文言解釋：「久聞」指聽說已久；「實乃」即實在是。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">在……界享負盛名 / 地位崇高</div><div class="improve-example"><b>📝 應用例句：</b><br>閣下在飲食界享負盛名，為業界所推崇。</div></div>
-                    <div class="improve-item"><div class="improve-phrase">經驗豐富 / 見解獨到精闢</div><div class="improve-example"><b>📝 應用例句：</b><br>閣下在餐飲管理上經驗豐富，對美食的品鑑眼光獨到，見解精闢。</div></div>
-                    <div class="improve-item"><div class="improve-phrase">屢獲殊榮 / 實乃業界翹楚</div><div class="improve-example"><b>📝 應用例句：</b><br>閣下曾參與多項大賽，屢獲殊榮，實乃業界翹楚。<br><br><i>💡 文言解釋：「翹楚」比喻傑出的人才。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">💡 詞彙辨析：「素聞」 vs 「素仰」</div><div class=\"improve-example\"><b>📝 素聞：</b>一直聽說。<br>側重於「客觀接收資訊」，語氣平實。<br><i>例：素聞 閣下在學界致力推廣STEM教育。</i><br><br><b>📝 素仰：</b>一直仰慕。<br>側重於「強烈敬意與推崇」，語氣極為莊重，特別適合用來邀請大師級貴賓。<br><i>例：素仰 閣下廚藝超卓，更榮獲「廚神」美譽。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">久仰 閣下... (仰慕已久)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>久仰 閣下大名，今日特致函誠邀 閣下出席。<br><br><i>💡 文言解釋：「久仰」指仰慕已久。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">久聞 閣下... (聽說已久)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>久聞 閣下對本地藝術發展貢獻良多，實乃業界楷模。<br><br><i>💡 文言解釋：「久聞」指聽說已久；「實乃」即實在是。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">在……界享負盛名 / 地位崇高</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>閣下在飲食界享負盛名，為業界所推崇。</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">經驗豐富 / 見解獨到精闢</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>閣下在餐飲管理上經驗豐富，對美食的品鑑眼光獨到，見解精闢。</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">屢獲殊榮 / 實乃業界翹楚</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>閣下曾參與多項大賽，屢獲殊榮，實乃業界翹楚。<br><br><i>💡 文言解釋：「翹楚」比喻傑出的人才。</i></div></div>
                 `
             },
             action: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">特致函邀請 閣下擔任該日/次活動之……(角色及任務)。</div><div class="improve-example"><b>📝 應用例句：</b><br>特致函邀請 閣下擔任該次比賽之主席評判，並即場點評參賽作品。<br><br><i>💡 文言解釋：「致函」即專門寫這封信。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">懇請 閣下能撥冗蒞臨，為是次……</div><div class="improve-example"><b>📝 應用例句：</b><br>本會懇請 閣下能撥冗蒞臨，為是次開幕典禮擔任剪綵嘉賓。<br><br><i>💡 文言解釋：「撥冗」指推開繁忙的事務抽出時間；「蒞臨」是敬辭，指貴賓親自到來。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">如蒙 閣下俯允擔任……，定能令活動生色不少。</div><div class="improve-example"><b>📝 應用例句：</b><br>如蒙 閣下俯允擔任是次問答比賽之首席評判，定能令活動生色不少。<br><br><i>💡 文言解釋：「如蒙」即如果承蒙；「俯允」是謙卑地請求對方答應的敬辭。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">期盼 閣下能撥冗出席，與大眾分享……</div><div class="improve-example"><b>📝 應用例句：</b><br>期盼 閣下能撥冗出席，與大眾分享您在環保領域的寶貴經驗。</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">特致函邀請 閣下擔任該日/次活動之……(角色及任務)。</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>特致函邀請 閣下擔任該次比賽之主席評判，並即場點評參賽作品。<br><br><i>💡 文言解釋：「致函」即專門寫這封信。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">懇請 閣下能撥冗蒞臨，為是次……</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>本會懇請 閣下能撥冗蒞臨，為是次開幕典禮擔任剪綵嘉賓。<br><br><i>💡 文言解釋：「撥冗」指推開繁忙的事務抽出時間；「蒞臨」是敬辭，指貴賓親自到來。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">如蒙 閣下俯允擔任……，定能令活動生色不少。</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>如蒙 閣下俯允擔任是次問答比賽之首席評判，定能令活動生色不少。<br><br><i>💡 文言解釋：「如蒙」即如果承蒙；「俯允」是謙卑地請求對方答應的敬辭。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">期盼 閣下能撥冗出席，與大眾分享……</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>期盼 閣下能撥冗出席，與大眾分享您在環保領域的寶貴經驗。</div></div>
                 `
             },
             end: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">結尾必備元素 🎯</div><div class="improve-example"><b>📝 包含：</b><br>1. 對方的重要性<br>2. 等候回信<br>3. 回覆期限<br>4. 聯絡方式與聯絡人<br><br><b>💡 完整例句：</b><br>倘蒙 閣下賞光出席，實是本公司之莫大榮幸！祈請 閣下於 12 月 22 日(星期五)前賜覆為盼。如對是次表演有任何查詢，煩請致電 2611 3344 與駱天恩小姐聯絡。專此，候覆。<br><br><i>💡 文言解釋：「倘蒙」指如果承蒙；「賜覆為盼」指希望能賜予回覆；「專此，候覆」指專門寫這封信，等候您的回覆。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">祈請示覆 (恭敬地請求回覆指示)</div><div class="improve-example"><b>📝 應用例句：</b><br>以上安排是否妥當，祈請示覆。<br><br><i>💡 文言解釋：「祈請」即懇切地請求；「示覆」即給予指示並回覆。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">特此奉告，並候回音 (特地發信告知，等候回音)</div><div class="improve-example"><b>📝 應用例句：</b><br>活動詳情如上，特此奉告，並候回音。</div></div>
-                    <div class="improve-item"><div class="improve-phrase">如蒙惠告，不勝感激 (若能告知結果，將非常感激)</div><div class="improve-example"><b>📝 應用例句：</b><br>閣下是否能抽空出席，如蒙惠告，不勝感激。<br><br><i>💡 文言解釋：「如蒙」指如果承蒙；「惠告」是敬辭，指對方施恩告知。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">⏳ 寫作時間軸小貼士</div><div class="improve-example"><b>📝 時間安排參考：</b><br>【寫信日期】 ➔ 通常在活動前一個半月<br>【回覆日期】 ➔ 通常給予對方寫信後兩周的時間考慮<br>【活動日期】 ➔ 實際舉辦的日期</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">結尾必備元素 🎯</div><div class=\"improve-example\"><b>📝 包含：</b><br>1. 對方的重要性<br>2. 等候回信<br>3. 回覆期限<br>4. 聯絡方式與聯絡人<br><br><b>💡 完整例句：</b><br>倘蒙 閣下賞光出席，實是本公司之莫大榮幸！祈請 閣下於 12 月 22 日(星期五)前賜覆為盼。如對是次表演有任何查詢，煩請致電 2611 3344 與駱天恩小姐聯絡。專此，候覆。<br><br><i>💡 文言解釋：「倘蒙」指如果承蒙；「賜覆為盼」指希望能賜予回覆；「專此，候覆」指專門寫這封信，等候您的回覆。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">祈請示覆 (恭敬地請求回覆指示)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>以上安排是否妥當，祈請示覆。<br><br><i>💡 文言解釋：「祈請」即懇切地請求；「示覆」即給予指示並回覆。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">特此奉告，並候回音 (特地發信告知，等候回音)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>活動詳情如上，特此奉告，並候回音。</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">如蒙惠告，不勝感激 (若能告知結果，將非常感激)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>閣下是否能抽空出席，如蒙惠告，不勝感激。<br><br><i>💡 文言解釋：「如蒙」指如果承蒙；「惠告」是敬辭，指對方施恩告知。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">⏳ 寫作時間軸小貼士</div><div class=\"improve-example\"><b>📝 時間安排參考：</b><br>【寫信日期】 ➔ 通常在活動前一個半月<br>【回覆日期】 ➔ 通常給予對方寫信後兩周的時間考慮<br>【活動日期】 ➔ 實際舉辦的日期</div></div>
                 `
             },
             closing: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">通用祝頌語 (適用於大部分平輩或機構)</div><div class="improve-example"><b>📝 常用詞彙：</b><br>敬祝 台安 (最常用)<br>敬頌 大安<br>順頌 時祺<br><br><i>💡 文言解釋：「祺」有吉祥、安好的意思；「安」即平安。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">商界祝頌語 (適用於商業機構、合作夥伴)</div><div class="improve-example"><b>📝 常用詞彙：</b><br>敬頌 商祺<br>順祝 籌安<br>順頌 財安<br><br><i>💡 文言解釋：「商/籌/財」皆扣合商業情境，祝願對方生意興隆、財源廣進。</i></div></div>
-                    <div class="improve-item"><div class="improve-phrase">教育界/學界祝頌語 (適用於校長、教授、學者)</div><div class="improve-example"><b>📝 常用詞彙：</b><br>敬頌 學安<br>敬祝 教安<br>順頌 文祺</div></div>
-                    <div class="improve-item"><div class="improve-phrase">⚠️ 格式排版提醒</div><div class="improve-example"><b>📝 注意事項：</b><br>「敬祝」或「敬頌」等祝語需<b>低兩格</b>寫，而後面的祝福語（如「台安」、「商祺」）則需在<b>下一行頂格</b>寫。</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">通用祝頌語 (適用於大部分平輩或機構)</div><div class=\"improve-example\"><b>📝 常用詞彙：</b><br>敬祝 台安 (最常用)<br>敬頌 大安<br>順頌 時祺<br><br><i>💡 文言解釋：「祺」有吉祥、安好的意思；「安」即平安。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">商界祝頌語 (適用於商業機構、合作夥伴)</div><div class=\"improve-example\"><b>📝 常用詞彙：</b><br>敬頌 商祺<br>順祝 籌安<br>順頌 財安<br><br><i>💡 文言解釋：「商/籌/財」皆扣合商業情境，祝願對方生意興隆、財源廣進。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">教育界/學界祝頌語 (適用於校長、教授、學者)</div><div class=\"improve-example\"><b>📝 常用詞彙：</b><br>敬頌 學安<br>敬祝 教安<br>順頌 文祺</div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">⚠️ 格式排版提醒</div><div class=\"improve-example\"><b>📝 注意事項：</b><br>「敬祝」或「敬頌」等祝語需<b>低兩格</b>寫，而後面的祝福語（如「台安」、「商祺」）則需在<b>下一行頂格</b>寫。</div></div>
                 `
             },
             signoff: {
                 html: `
-                    <div class="improve-item"><div class="improve-phrase">下款的標準格式組合</div><div class="improve-example"><b>📝 包含：</b><br>1. 公司名稱 ＋ 職稱<br>2. 簽署 (手寫簽名)<br>3. 名字 ＋ 上/謹上/謹啟<br><br><b>💡 例：</b><br>致富世紀集團公關部經理<br><i>(劉小鳳簽名)</i><br>劉小鳳 謹啟<br><br><i>💡 文言解釋：「謹啟」指恭敬地陳述、開啟這封信。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">下款的標準格式組合</div><div class=\"improve-example\"><b>📝 包含：</b><br>1. 公司名稱 ＋ 職稱<br>2. 簽署 (手寫簽名)<br>3. 名字 ＋ 上/謹上/謹啟<br><br><b>💡 例：</b><br>致富世紀集團公關部經理<br><i>(劉小鳳簽名)</i><br>劉小鳳 謹啟<br><br><i>💡 文言解釋：「謹啟」指恭敬地陳述、開啟這封信。</i></div></div>
                 `
             }
         };
 
         const sectionNames = {
-            'salutation': '上款', 'title': '標題', 'intro': '引言 (公司簡介與活動目的)',
-            'praise': '主體 (讚揚受文者成就與貢獻)', 'action': '主體 (提出任務詳情)',
+            'salutation': '上款', 'title': '標題', 'intro': '1. 引言 (公司簡介與活動目的/邀請背景)',
+            'praise': '2. 主體 (說明邀請原因/讚揚受文者)', 'action': '3. 主體 (指出對方出席的作用/意義與活動詳情)',
             'end': '結語 (聯絡與期盼)', 'closing': '祝頌語', 'signoff': '下款'
         };
 
@@ -1162,7 +1160,7 @@
                     });
                 });
             } else {
-                contentBox.innerHTML = '<p style="color:#64748b; padding:20px; text-align:center;">此部分目前沒有額外的參考詞彙哦！</p>';
+                contentBox.innerHTML = '<p style=\"color:#64748b; padding:20px; text-align:center;\">此部分目前沒有額外的參考詞彙哦！</p>';
             }
             modal.style.display = 'flex';
         }
