@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>實用文寫作特訓：邀請信大師之路 | winwin1109 Dojo</title>
+    <title>實用文寫作特訓：邀請信寫作助理 | winwin1109 Dojo</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -264,8 +264,11 @@
                     答對<span style="color:#10b981">+2分</span>，答錯<span style="color:#ef4444">扣1分</span>。<br>
                     過關後將解鎖「寫作小助理」！
                 </div>
-                <button class="start-btn" id="l1-start-btn" onclick="startL1Game()">INSERT COIN</button>
-                <button class="start-btn next-lvl-btn" id="l1-next-lvl-btn" onclick="startLevel2()">進入資料整理室</button>
+                <div id="start-btn-group" style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+                    <button class="start-btn" id="l1-start-btn" onclick="startL1Game()">開始遊戲</button>
+                    <button class="start-btn" id="l1-skip-btn" onclick="startLevel2()" style="background: #3b82f6; border-color: #93c5fd;">開始寫作</button>
+                </div>
+                <button class="start-btn next-lvl-btn" id="l1-next-lvl-btn" onclick="startLevel2()" style="display:none; margin-top:15px;">進入資料整理室</button>
             </div>
 
             <div id="hud">
@@ -325,7 +328,7 @@
             <div class="l2-header">
                 <div style="display:flex; align-items:center;">
                     <button class="restart-btn" onclick="location.reload()" title="回到首頁">↺ 重新開始</button>
-                    <div class="l2-header-title">📋 寫作小助理：資料整理與重組</div>
+                    <div class="l2-header-title">📋 邀請信寫作助理：資料整理與重組</div>
                 </div>
                 <div class="l2-step-indicator">
                     <div class="step-dot active unlocked" id="dot-1" onclick="navToPanel(1)">1</div>
@@ -769,6 +772,7 @@
             const overlay = document.getElementById('game-overlay');
             const title = document.querySelector('.overlay-title');
             const text = document.getElementById('overlay-text');
+            const bGrp = document.getElementById('start-btn-group');
             const bS = document.getElementById('l1-start-btn');
             const bN = document.getElementById('l1-next-lvl-btn');
             overlay.style.display = 'flex';
@@ -776,11 +780,14 @@
             if(win){
                 playSound('hit'); title.innerHTML = 'K.O. <br> 第一關完成！'; title.style.color = 'var(--text-gold)';
                 text.innerHTML = `格鬥得分：<span class=\"arcade-font\" style=\"color:#10b981; font-size:1.5em;\">${l1_score}</span> 分<br><br>幹得好！你擊敗了魔王，<br>現在讓我們進入資料室，<br>開始拆解真實的邀請信資料吧！`;
-                bS.style.display = 'none'; bN.style.display = 'inline-block';
+                bGrp.style.display = 'none'; 
+                bN.style.display = 'inline-block';
             }else{
                 playSound('down'); title.innerHTML = 'GAME OVER'; title.style.color = '#ef4444';
-                text.innerHTML = `格鬥得分：<span class=\"arcade-font\" style=\"color:#ef4444; font-size:1.5em;\">${l1_score}</span> 分<br><br>實習生不支倒地...👹<br>重新 INSERT COIN 挑戰！`;
-                bS.style.display = 'inline-block'; bS.innerHTML = 'RETRY'; bN.style.display = 'none';
+                text.innerHTML = `格鬥得分：<span class=\"arcade-font\" style=\"color:#ef4444; font-size:1.5em;\">${l1_score}</span> 分<br><br>實習生不支倒地...👹<br>重新挑戰或是直接開始寫作？`;
+                bGrp.style.display = 'flex'; 
+                bS.innerHTML = '重新遊戲'; 
+                bN.style.display = 'none';
             }
         }
 
@@ -1098,10 +1105,33 @@
             praise: {
                 html: `
                     <div class=\"improve-item\"><div class=\"improve-phrase\">💡 詞彙辨析：「素聞」 vs 「素仰」</div><div class=\"improve-example\"><b>📝 素聞：</b>一直聽說。<br>側重於「客觀接收資訊」，語氣平實。<br><i>例：素聞 閣下在學界致力推廣STEM教育。</i><br><br><b>📝 素仰：</b>一直仰慕。<br>側重於「強烈敬意與推崇」，語氣極為莊重，特別適合用來邀請大師級貴賓。<br><i>例：素仰 閣下廚藝超卓，更榮獲「廚神」美譽。</i></div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">🌟 讚揚與邀請：演講嘉賓 / 講座講者</div><div class=\"improve-example\">
+                        <ul style=\"padding-left: 20px; margin: 0;\">
+                            <li><b>見解精闢 / 學養深厚</b><br><i>例句：素仰 閣下學養深厚，對行業發展見解精闢，特致函誠邀 閣下擔任是次講座之主講嘉賓。</i></li>
+                            <li style=\"margin-top: 10px;\"><b>經驗豐富 / 貢獻良多</b><br><i>例句：閣下在資訊科技界經驗豐富，對推動業界發展貢獻良多，若能邀得 閣下分享寶貴經驗，參加者定必獲益良多。</i></li>
+                        </ul>
+                    </div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">🌟 讚揚與邀請：比賽評判</div><div class=\"improve-example\">
+                        <ul style=\"padding-left: 20px; margin: 0;\">
+                            <li><b>眼光獨到 / 評語中肯</b><br><i>例句：素聞 閣下眼光獨到，評語精準中肯，如蒙 俯允擔任是次比賽之主席評判，實為參賽者之福。</i></li>
+                            <li style=\"margin-top: 10px;\"><b>造詣精湛 / 德高望重</b><br><i>例句：閣下在藝術界造詣精湛，德高望重，懇請 閣下能撥冗擔任比賽評判，為參賽者提供寶貴指導。</i></li>
+                        </ul>
+                    </div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">🌟 讚揚與邀請：主禮/剪綵嘉賓</div><div class=\"improve-example\">
+                        <ul style=\"padding-left: 20px; margin: 0;\">
+                            <li><b>德望俱重 / 聲譽卓著</b><br><i>例句：閣下在商界德望俱重，聲譽卓著，祈盼 閣下能撥冗蒞臨擔任主禮嘉賓。</i></li>
+                            <li style=\"margin-top: 10px;\"><b>蓬蓽生輝 / 增光不少</b><br><i>例句：如蒙 閣下俯允親臨剪綵，定必令是次開幕典禮生色不少，本會亦覺蓬蓽生輝。</i></li>
+                        </ul>
+                    </div></div>
+                    <div class=\"improve-item\"><div class=\"improve-phrase\">🌟 讚揚與邀請：大會司儀 / 表演嘉賓</div><div class=\"improve-example\">
+                        <ul style=\"padding-left: 20px; margin: 0;\">
+                            <li><b>風趣幽默 / 帶動氣氛</b><br><i>例句：素仰 閣下主持風格風趣幽默，善於帶動全場氣氛，特此誠邀 閣下擔任晚會司儀。</i></li>
+                            <li style=\"margin-top: 10px;\"><b>技藝超群 / 傾力演出</b><br><i>例句：閣下技藝超群，才華橫溢，若能邀得 閣下擔任表演嘉賓，定能將晚會氣氛推向高潮。</i></li>
+                        </ul>
+                    </div></div>
                     <div class=\"improve-item\"><div class=\"improve-phrase\">久仰 閣下... (仰慕已久)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>久仰 閣下大名，今日特致函誠邀 閣下出席。<br><br><i>💡 文言解釋：「久仰」指仰慕已久。</i></div></div>
                     <div class=\"improve-item\"><div class=\"improve-phrase\">久聞 閣下... (聽說已久)</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>久聞 閣下對本地藝術發展貢獻良多，實乃業界楷模。<br><br><i>💡 文言解釋：「久聞」指聽說已久；「實乃」即實在是。</i></div></div>
                     <div class=\"improve-item\"><div class=\"improve-phrase\">在……界享負盛名 / 地位崇高</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>閣下在飲食界享負盛名，為業界所推崇。</div></div>
-                    <div class=\"improve-item\"><div class=\"improve-phrase\">經驗豐富 / 見解獨到精闢</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>閣下在餐飲管理上經驗豐富，對美食的品鑑眼光獨到，見解精闢。</div></div>
                     <div class=\"improve-item\"><div class=\"improve-phrase\">屢獲殊榮 / 實乃業界翹楚</div><div class=\"improve-example\"><b>📝 應用例句：</b><br>閣下曾參與多項大賽，屢獲殊榮，實乃業界翹楚。<br><br><i>💡 文言解釋：「翹楚」比喻傑出的人才。</i></div></div>
                 `
             },
